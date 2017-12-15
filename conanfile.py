@@ -1,6 +1,6 @@
-from conans import ConanFile, CMake
-from conans import tools
+from conans import ConanFile, CMake, tools
 import platform, os, sys
+from glob import glob
 
 class vtkConan(ConanFile):
     name = "VTK"
@@ -10,22 +10,18 @@ class vtkConan(ConanFile):
         image processing, and visualization."
     homepage = "https://www.vtk.org/"
     url = "https://gitlab.kitware.com/vtk/vtk"
-    license = "http://www.vtk.org/licensing/"
+    license = "BSD license"
     settings = "os", "compiler", "build_type", "arch"
     options = {
         "shared": [True, False],
         "Module_vtkRenderingExternal": [True, False]
         }
     default_options = "shared=True", "Module_vtkRenderingExternal=False"
-    ZIP_FOLDER_NAME = "VTK-%s" % version
-    INSTALL_DIR = "_install"
-    CMAKE_OPTIONS = "-DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF "
+    cmake_options = "-DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF "
 
     def source(self):
-        zip_name = self.ZIP_FOLDER_NAME + ".zip"
-        tools.download("http://www.vtk.org/files/release/7.0/%s" % zip_name , zip_name)
-        tools.unzip(zip_name)
-        os.unlink(zip_name)
+        tools.get("%s/repository/v%s/archive.zip" % (self.url, self.version))
+        os.rename(glob("vtk-v%s-*" % self.version)[0], "sources")
 
     def package(self):
         self.copy("FindVTK.cmake", ".", ".")
@@ -36,30 +32,31 @@ class vtkConan(ConanFile):
         self.copy("*.dylib*", dst="bin", src="lib") # From lib to bin
 
     def build(self):
-        if self.settings.os == "Linux":
-            self.run("sudo apt-get update && sudo apt-get install -y \
-                freeglut3-dev \
-                mesa-common-dev \
-                mesa-utils-extra \
-                libgl1-mesa-dev \
-                libglapi-mesa")
-    	CMAKE_OPTIONALS = ""
-        BUILD_OPTIONALS = ""
-        if self.options.shared == False:
-            CMAKE_OPTIONALS += "-DBUILD_SHARED_LIBS=OFF "
-        if self.options.Module_vtkRenderingExternal == True:
-            CMAKE_OPTIONALS += "-DModule_vtkRenderingExternal:BOOL=ON "
-        cmake = CMake(self.settings)
+        pass
+        # if self.settings.os == "Linux":
+        #     self.run("sudo apt-get update && sudo apt-get install -y \
+        #         freeglut3-dev \
+        #         mesa-common-dev \
+        #         mesa-utils-extra \
+        #         libgl1-mesa-dev \
+        #         libglapi-mesa")
+        # CMAKE_OPTIONALS = ""
+        # BUILD_OPTIONALS = ""
+        # if self.options.shared == False:
+        #     CMAKE_OPTIONALS += "-DBUILD_SHARED_LIBS=OFF "
+        # if self.options.Module_vtkRenderingExternal == True:
+        #     CMAKE_OPTIONALS += "-DModule_vtkRenderingExternal:BOOL=ON "
+        # cmake = CMake(self.settings)
 
-        if self.settings.os == "Windows":
-            self.run("IF not exist _build mkdir _build")
-        else:
-            self.run("mkdir _build")
-        cd_build = "cd _build"
+        # if self.settings.os == "Windows":
+        #     self.run("IF not exist _build mkdir _build")
+        # else:
+        #     self.run("mkdir _build")
+        # cd_build = "cd _build"
 
-        self.run("%s && cmake ../%s -DCMAKE_INSTALL_PREFIX=../%s %s %s %s" % (cd_build, self.ZIP_FOLDER_NAME, self.INSTALL_DIR, self.CMAKE_OPTIONS, CMAKE_OPTIONALS, cmake.command_line))
-        self.run("%s && cmake --build . %s %s -- -j" % (cd_build, cmake.build_config, BUILD_OPTIONALS))
-        self.run("%s && cmake --build . --target install %s" % (cd_build, cmake.build_config))
+        # self.run("%s && cmake ../%s -DCMAKE_INSTALL_PREFIX=../%s %s %s %s" % (cd_build, self.ZIP_FOLDER_NAME, self.INSTALL_DIR, self.CMAKE_OPTIONS, CMAKE_OPTIONALS, cmake.command_line))
+        # self.run("%s && cmake --build . %s %s -- -j" % (cd_build, cmake.build_config, BUILD_OPTIONALS))
+        # self.run("%s && cmake --build . --target install %s" % (cd_build, cmake.build_config))
 
     def package_info(self):
         libs = [
