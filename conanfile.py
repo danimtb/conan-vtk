@@ -174,7 +174,7 @@ class vtkConan(ConanFile):
         ]
 
         for i, lib in enumerate(libs):
-            libs[i] = ("%s-%s" % lib, lib_version)
+            libs[i] = ("%s-%s" % (lib, lib_version))
 
         self.cpp_info.libs = libs
 
