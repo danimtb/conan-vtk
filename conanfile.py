@@ -55,7 +55,7 @@ class vtkConan(ConanFile):
         #         libglapi-mesa")
 
     def package_info(self):
-        lib_version = ("%s.%s" % self.version.split('.')[0], self.version.split('.')[1])
+        lib_version = ("%s.%s" % (self.version.split('.')[0], self.version.split('.')[1]))
 
         libs = [
             "vtkalglib",
