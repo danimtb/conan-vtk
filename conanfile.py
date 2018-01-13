@@ -27,6 +27,7 @@ class vtkConan(ConanFile):
         self.copy("copyright*", dst="licenses", src="sources", ignore_case=True)
         self.copy("*license*", dst="licenses", src="sources", ignore_case=True)
         self.copy("*.h", dst="include", src="sources")
+        self.copy("*.h", dst="include", exclude="sources")
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
