@@ -55,6 +55,6 @@ if __name__ == "__main__":
         upload=upload_remote,
         remotes=upload_remote)
 
-    builder.add_common_builds(shared_option_name="VTK:shared", pure_c=False,
+    builder.add_common_builds(shared_option_name="vtk:shared", pure_c=False,
                               dll_with_static_runtime=True)
     builder.run()
