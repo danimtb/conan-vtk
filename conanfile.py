@@ -186,8 +186,6 @@ class vtkConan(ConanFile):
             "vtkRenderingVolumeOpenGL2",
             "vtksqlite",
             "vtksys",
-            "vtkTestingIOSQL",
-            "vtkTestingRendering",
             "vtktiff",
             "vtkverdict",
             "vtkViewsContext2D",
