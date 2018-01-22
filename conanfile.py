@@ -177,7 +177,6 @@ class vtkConan(ConanFile):
             "vtkRenderingContext2D",
             "vtkRenderingContextOpenGL2",
             "vtkRenderingCore",
-            "vtkRenderingExternal",
             "vtkRenderingFreeType",
             "vtkRenderingImage",
             "vtkRenderingLabel",
@@ -197,6 +196,9 @@ class vtkConan(ConanFile):
             "vtkViewsInfovis",
             "vtkzlib"
         ]
+
+        if self.options.Module_vtkRenderingExternal:
+            libs.append("vtkRenderingExternal")
 
         for i, lib in enumerate(libs):
             libs[i] = ("%s-%s" % (lib, lib_version))
