@@ -3,7 +3,7 @@ import os
 from glob import glob
 
 class vtkConan(ConanFile):
-    name = "VTK"
+    name = "vtk"
     version = "7.1.1"
     description = "The Visualization Toolkit (VTK) is an open-source, \
         freely available software system for 3D computer graphics, \
