@@ -52,11 +52,14 @@ class vtkConan(ConanFile):
         self.copy("*.txx", dst="include", excludes="sources")
         self.copy("*.tpp", dst="include", excludes="sources")
         self.copy("*.tpl", dst="include", excludes="sources")
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.dll", dst="bin", keep_path=False)
-        self.copy("*.so", dst="lib", keep_path=False)
-        self.copy("*.dylib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+
+        if self.options["shared"]:
+            self.copy("*.dll", dst="bin", keep_path=False)
+            self.copy("*.so", dst="lib", keep_path=False)
+            self.copy("*.dylib", dst="lib", keep_path=False)
+        else:
+            self.copy("*.lib", dst="lib", keep_path=False)
+            self.copy("*.a", dst="lib", keep_path=False)
 
     def imports(self):
         self.copy("*.dll", dst="bin", src="bin") # From bin to bin
