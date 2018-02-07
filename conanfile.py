@@ -64,6 +64,10 @@ class vtkConan(ConanFile):
         self.copy("*.dylib*", dst="lib", src="lib") # From lib to bin
 
     def build(self):
+        tools.replace_in_file("%s/sources/CMakeLists.txt" % self.source_folder, "project(VTK)", """project(VTK)
+        include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+        conan_basic_setup()""")
+
         cmake = CMake(self)
         cmake.definitions["BUILD_EXAMPLES"] = "OFF"
         cmake.definitions["BUILD_TESTING"] = "OFF"
