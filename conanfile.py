@@ -67,6 +67,15 @@ class vtkConan(ConanFile):
         self.copy("*.dll", dst="bin", src="bin") # From bin to bin
         self.copy("*.dylib*", dst="lib", src="lib") # From lib to bin
 
+    def system_requirements(self):
+        if os_info.is_linux:
+            installer = SystemPackageTool()
+            installer.install("freeglut3-dev")
+            installer.install("mesa-common-dev")
+            installer.install("mesa-utils-extra")
+            installer.install("libgl1-mesa-dev")
+            installer.install("libglapi-mesa")
+
     def build(self):
         cmake = CMake(self)
         cmake.definitions["BUILD_EXAMPLES"] = "OFF"
@@ -75,14 +84,6 @@ class vtkConan(ConanFile):
         cmake.definitions["Module_vtkRenderingExternal"] = "ON" if self.options.Module_vtkRenderingExternal else "OFF"
         cmake.configure(source_folder="sources")
         cmake.build()
-
-        # if self.settings.os == "Linux":
-        #     self.run("sudo apt-get update && sudo apt-get install -y \
-        #         freeglut3-dev \
-        #         mesa-common-dev \
-        #         mesa-utils-extra \
-        #         libgl1-mesa-dev \
-        #         libglapi-mesa")
 
     def package_info(self):
         lib_version = ("%s.%s" % (self.version.split('.')[0], self.version.split('.')[1]))
