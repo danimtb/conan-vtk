@@ -22,6 +22,9 @@ class vtkConan(ConanFile):
     def source(self):
         tools.get("%s/repository/v%s/archive.zip" % (self.url, self.version))
         os.rename(glob("vtk-v%s-*" % self.version)[0], "sources")
+        tools.replace_in_file("%s/sources/CMakeLists.txt" % self.source_folder, "project(VTK)", """project(VTK)
+        include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+        conan_basic_setup()""")
 
     def package(self):
         self.copy("copyright*", dst="licenses", src="sources", ignore_case=True)
