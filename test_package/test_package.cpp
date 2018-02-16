@@ -15,17 +15,17 @@ int main(int, char *[])
   coneSource->Update();
 
   //Create a mapper and actor
-  vtkSmartPointer<vtkPolyDataMapper> mapper =
-    vtkSmartPointer<vtkPolyDataMapper>::New();
-  mapper->SetInputConnection(coneSource->GetOutputPort());
+//   vtkSmartPointer<vtkPolyDataMapper> mapper =
+//     vtkSmartPointer<vtkPolyDataMapper>::New();
+//   mapper->SetInputConnection(coneSource->GetOutputPort());
 
-  vtkSmartPointer<vtkActor> actor =
-    vtkSmartPointer<vtkActor>::New();
-  actor->SetMapper(mapper);
+//   vtkSmartPointer<vtkActor> actor =
+//     vtkSmartPointer<vtkActor>::New();
+//   actor->SetMapper(mapper);
 
   //Create a renderer, render window, and interactor
-  vtkSmartPointer<vtkRenderer> renderer =
-    vtkSmartPointer<vtkRenderer>::New();
+//   vtkSmartPointer<vtkRenderer> renderer =
+//     vtkSmartPointer<vtkRenderer>::New();
 //   vtkSmartPointer<vtkRenderWindow> renderWindow =
 //     vtkSmartPointer<vtkRenderWindow>::New();
 //   renderWindow->AddRenderer(renderer);
@@ -34,8 +34,8 @@ int main(int, char *[])
 //   renderWindowInteractor->SetRenderWindow(renderWindow);
 
   //Add the actors to the scene
-  renderer->AddActor(actor);
-  renderer->SetBackground(.3, .2, .1); // Background color dark red
+//   renderer->AddActor(actor);
+//   renderer->SetBackground(.3, .2, .1); // Background color dark red
 
   //Render and interact
 //   renderWindow->Render();
