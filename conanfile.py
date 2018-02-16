@@ -18,6 +18,7 @@ class vtkConan(ConanFile):
         "Module_vtkRenderingExternal": [True, False]
         }
     default_options = "shared=True", "Module_vtkRenderingExternal=False"
+    generators = "cmake"
 
     def source(self):
         tools.get("%s/repository/v%s/archive.zip" % (self.url, self.version))
