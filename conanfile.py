@@ -1,4 +1,5 @@
-from conans import ConanFile, CMake, tools, SystemPackageTool
+from conans import ConanFile, CMake, tools
+from conans.tools import os_info, SystemPackageTool
 import os
 from glob import glob
 
