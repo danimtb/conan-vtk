@@ -3,6 +3,7 @@ from conans.tools import os_info, SystemPackageTool
 import os
 from glob import glob
 
+
 class vtkConan(ConanFile):
     name = "vtk"
     version = "7.1.1"
@@ -17,7 +18,7 @@ class vtkConan(ConanFile):
     options = {
         "shared": [True, False],
         "Module_vtkRenderingExternal": [True, False]
-        }
+    }
     default_options = "shared=True", "Module_vtkRenderingExternal=False"
     generators = "cmake"
 
@@ -29,7 +30,8 @@ class vtkConan(ConanFile):
         conan_basic_setup()""")
 
     def package(self):
-        self.copy("copyright*", dst="licenses", src="sources", ignore_case=True)
+        self.copy("copyright*", dst="licenses",
+                  src="sources", ignore_case=True)
         self.copy("*license*", dst="licenses", src="sources", ignore_case=True)
         self.copy("*.H", dst="include", src="sources")
         self.copy("*.h", dst="include", src="sources")
@@ -65,8 +67,8 @@ class vtkConan(ConanFile):
         self.copy("*.a", dst="lib", keep_path=False)
 
     def imports(self):
-        self.copy("*.dll", dst="bin", src="bin") # From bin to bin
-        self.copy("*.dylib*", dst="lib", src="lib") # From lib to bin
+        self.copy("*.dll", dst="bin", src="bin")  # From bin to bin
+        self.copy("*.dylib*", dst="lib", src="lib")  # From lib to bin
 
     def system_requirements(self):
         if os_info.is_linux:
@@ -87,7 +89,8 @@ class vtkConan(ConanFile):
         cmake.build()
 
     def package_info(self):
-        lib_version = ("%s.%s" % (self.version.split('.')[0], self.version.split('.')[1]))
+        lib_version = ("%s.%s" % (self.version.split('.')
+                                  [0], self.version.split('.')[1]))
 
         libs = [
             "vtkalglib",
